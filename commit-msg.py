@@ -2,19 +2,20 @@
 import sys
 import spacy
 
+# words that should not appear in an imperative sentence
+bad_words = ['i', 'please', 'you']
+
 def is_imperative(msg):
     nlp = spacy.load('en_core_web_sm')
     out = nlp(msg)
 
-    print(out[0])
-    
-    # check if the sentence begins with present tense verb
     if out[0].tag_ != 'VB':
+        print('%s is not a simple verb' % out[0].text)
         return False
 
     # check if there is a subject
     for word in out:
-        if word.dep == spacy.symbols.nsubj:
+        if word.text.lower() in bad_words:
             return False
 
     return True
