@@ -5,7 +5,7 @@ import spacy
 # words that should not appear in an imperative sentence
 non_imperative_words = {'i', 'please', 'you'}
 # words handled poorly by spacy
-problem_words = {'rework'}
+problem_words = {'rework, update'}
 
 def is_imperative(msg):
     nlp = spacy.load('en_core_web_sm')
