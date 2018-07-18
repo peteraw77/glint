@@ -5,7 +5,7 @@ import spacy
 # words that should not appear in an imperative sentence
 non_imperative_words = {'i', 'please', 'you'}
 # words handled poorly by spacy
-problem_words = {'rework, update'}
+problem_words = {'rework', 'update', 'fix'}
 
 def is_imperative(msg):
     nlp = spacy.load('en_core_web_sm')
@@ -13,9 +13,9 @@ def is_imperative(msg):
 
     #TODO find a more elegant solution for problem words
     if out[0].tag_ != 'VB':
-        text = out[0].text
+        text = out[0].text.lower()
         if text not in problem_words:
-            print('%s is not a simple verb.' % text)
+            print('%s is not a simple verb' % text)
             return False
 
     # check if there is a subject
