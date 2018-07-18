@@ -1,5 +1,5 @@
 # glint
-Lint for git commit messages
+Git hook to ensure commit messages adhere to best practices
 
 ### Usage
 
