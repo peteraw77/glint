@@ -3,13 +3,6 @@ Git hook to ensure commit messages adhere to best practices
 
 ### Usage
 
-Install and configure [spaCy](https://github.com/explosion/spacy)
-for python:
-```
-pip3 install spacy
-python3 -m spacy download en_core_web_sm
-```
-
 Move `commit-msg.py` to your git hooks folder as `commit-msg`
 
 Please note this project is still in alpha and lots of
