@@ -9,12 +9,11 @@ def is_imperative(msg):
     nlp = spacy.load('en_core_web_sm')
     out = nlp(msg)
 
-    #TODO find a more elegant solution for problem words
     if out[0].tag_ != 'VB':
         print('%s is not a simple verb' % out[0].text)
         return False
 
-    # check if there is a subject
+    # check if there is a word that breaks imperative tense
     for word in out:
         if word.text.lower() in non_imperative_words:
             return False
@@ -52,7 +51,7 @@ def main():
 
     # check tense
     if not is_imperative(header):
-        print('Commit title must be in imperative tense.')
+        print('Commit title must be in imperative tense')
         sys.exit(1)
     else:
         sys.exit(0)
