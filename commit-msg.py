@@ -3,7 +3,7 @@ import sys
 import xmlrpc.client
 
 # server address
-server_url = 'http://localhost:8000'
+server_url = 'http://lit-mountain-34257.herokuapp.com'
 
 def get_commit_msg():
     commit_msg_file = open(sys.argv[1])
