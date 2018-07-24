@@ -1,24 +1,9 @@
 #!/usr/bin/python
 import sys
-import spacy
+import xmlrpc.client
 
-# words that should not appear in an imperative sentence
-non_imperative_words = {'i', 'please', 'you'}
-
-def is_imperative(msg):
-    nlp = spacy.load('en_core_web_sm')
-    out = nlp(msg)
-
-    if out[0].tag_ != 'VB':
-        print('%s is not a simple verb' % out[0].text)
-        return False
-
-    # check if there is a word that breaks imperative tense
-    for word in out:
-        if word.text.lower() in non_imperative_words:
-            return False
-
-    return True
+# server address
+server_url = 'http://lit-mountain-34257.herokuapp.com'
 
 def get_commit_msg():
     commit_msg_file = open(sys.argv[1])
@@ -50,11 +35,12 @@ def main():
         sys.exit(1)
 
     # check tense
-    if not is_imperative(header):
-        print('Commit title must be in imperative tense')
-        sys.exit(1)
-    else:
-        sys.exit(0)
+    with xmlrpc.client.ServerProxy(server_url) as proxy:
+        if not proxy.is_imperative(header):
+            print('Commit title must be in imperative tense.')
+            sys.exit(1)
+        else:
+            sys.exit(0)
 
 if __name__ == '__main__':
     main()
