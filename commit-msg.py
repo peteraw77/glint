@@ -1,6 +1,9 @@
 #!/usr/bin/python
 import sys
-import xmlrpclib
+import xmlrpc.client
+
+# server address
+server_url = 'http://localhost:8000'
 
 def get_commit_msg():
     commit_msg_file = open(sys.argv[1])
@@ -9,8 +12,6 @@ def get_commit_msg():
     return commit_msg
 
 def main():
-    server = xmlrpclib.ServerProxy('http://localhost:8000')
-
     msg = get_commit_msg()
     header = msg.split('\n')[0]
 
@@ -34,11 +35,12 @@ def main():
         sys.exit(1)
 
     # check tense
-    if not server.is_imperative(header):
-        print('Commit title must be in imperative tense.')
-        sys.exit(1)
-    else:
-        sys.exit(0)
+    with xmlrpc.client.ServerProxy(server_url) as proxy:
+        if not proxy.is_imperative(header):
+            print('Commit title must be in imperative tense.')
+            sys.exit(1)
+        else:
+            sys.exit(0)
 
 if __name__ == '__main__':
     main()
